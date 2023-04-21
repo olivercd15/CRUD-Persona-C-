@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Data;
+@model List<Personas>
+
+<div class="text-center">
+    <h1 class="display-4">LISTADO PERSONAS</h1>
+
+    @if (TempData["mensaje"] != null)
+    {
+        <div class="alert alert-danger">@TempData["mensaje"]</div>
+    }
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nombre completo</th>
+                <th>Edad</th>
+                <th>Fecha de nacimiento</th>
+                <th>Fecha de inscripción</th>
+                <th>Costo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var persona in Model)
+            {
+                <tr>
+                    <td>@persona.Id</td>
+                    <td>@persona.NombreCompleto</td>
+                    <td>@persona.Edad</td>
+                    <td>@persona.FechaNacimiento.ToShortDateString()</td>
+                    <td>@persona.FechaInscripcion.ToShortDateString()</td>
+                    <td>@persona.Costo</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Personas", new { id = persona.Id })'">Editar</button>
+                        <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "Personas", new { id = persona.Id })'">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button class="btn btn-success" onclick="location.href='@Url.Action("Create", "Personas")'">Crear</button>
+</div>
